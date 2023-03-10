@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
-  python-3.9:
+  python-3_9:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
@@ -25,7 +25,7 @@ jobs:
         python-version: '3.9'
     - run: pip install -r requirements.txt -r requirements-tests.txt
 
-  python-3.10:
+  python-3_10:
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
