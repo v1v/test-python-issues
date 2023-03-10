@@ -17,22 +17,15 @@ concurrency:
 jobs:
   python-3_9:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
     timeout-minutes: 2
+    permissions:
+      pull-requests: write # for marocchino/sticky-pull-request-comment
     steps:
-    - uses: actions/checkout@v3
-
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-    - run: pip install -r requirements.txt -r requirements-tests.txt
-
-  python-3_10:
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    steps:
-    - uses: actions/checkout@v3
-
-    - uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-    - run: pip install -r requirements.txt -r requirements-tests.txt
+      - run: |
+          mkdir -p ./pr
+          echo ${{ github.event.number }} | tee ./pr/number
+      - uses: actions/upload-artifact@v2
+        with:
+          name: all
+          path: pr/
